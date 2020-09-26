@@ -1,4 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rahil.ecommpoc.presentation">
-
-</manifest>
+<manifest package="com.rahil.poc.presentation" />

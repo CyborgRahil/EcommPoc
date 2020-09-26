@@ -7,7 +7,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import com.rahil.ecommpoc.data.model.HomePageEntity
 import com.rahil.ecommpoc.remote.service.ApiService
 import com.rahil.ecommpoc.remote.test.factory.AppDataFactory
-import io.reactivex.Flowable
+import io.reactivex.Single
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -21,7 +21,7 @@ class AppRemoteImpTest {
     @Test
     fun getHomePageDataFromNetwork() {
         stubAppServiceRepositories(
-            Flowable.just(
+            Single.just(
                 AppDataFactory.makeHomePageData()
             )
         )
@@ -33,7 +33,7 @@ class AppRemoteImpTest {
     @Test
     fun checkRestApiCallWhenCallingGetHomePageData() {
         stubAppServiceRepositories(
-            Flowable.just(
+            Single.just(
                 AppDataFactory.makeHomePageData()
             )
         )
@@ -42,7 +42,7 @@ class AppRemoteImpTest {
         verify(service).getHomePageData()
     }
 
-    private fun stubAppServiceRepositories(stub: Flowable<HomePageEntity>) {
+    private fun stubAppServiceRepositories(stub: Single<HomePageEntity>) {
         whenever(service.getHomePageData()) doReturn stub
     }
 }

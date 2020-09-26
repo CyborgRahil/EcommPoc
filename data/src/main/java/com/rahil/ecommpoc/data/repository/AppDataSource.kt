@@ -1,9 +1,8 @@
 package com.rahil.ecommpoc.data.repository
 
 import com.rahil.ecommpoc.data.model.HomePageEntity
-import com.rahil.ecommpoc.domain.model.homepage.HomePageModel
-import io.reactivex.Flowable
+import io.reactivex.Single
 
 interface AppDataSource {
-    fun getHomePageData(): Flowable<HomePageEntity>
+    fun getHomePageData(): Single<HomePageEntity>
 }

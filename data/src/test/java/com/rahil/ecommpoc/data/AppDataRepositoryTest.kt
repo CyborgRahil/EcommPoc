@@ -10,7 +10,7 @@ import com.rahil.ecommpoc.data.repository.AppDataSource
 import com.rahil.ecommpoc.data.source.AppDataSourceFactory
 import com.rahil.ecommpoc.data.test.factory.HomePageDataFactory
 import com.rahil.ecommpoc.domain.model.homepage.HomePageModel
-import io.reactivex.Flowable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +31,7 @@ class AppDataRepositoryTest {
 
     @Test
     fun calling_GetHomePageData_ReturnsComplete() {
-        stubHomePageData(Flowable.just(HomePageDataFactory.makeHomePageDataEntity()))
+        stubHomePageData(Single.just(HomePageDataFactory.makeHomePageDataEntity()))
         stubMapper(HomePageDataFactory.makeHomePageDataModel(), any())
 
         val testObserver = repository.getHomePageData().test()
@@ -42,7 +42,7 @@ class AppDataRepositoryTest {
     fun calling_GetHomePageData_ReturnsData() {
         val homePageEntity= HomePageDataFactory.makeHomePageDataEntity()
         val homePageModel = HomePageDataFactory.makeHomePageDataModel()
-        stubHomePageData(Flowable.just(homePageEntity))
+        stubHomePageData(Single.just(homePageEntity))
         stubMapper(homePageModel, homePageEntity)
 
         val testObserver = repository.getHomePageData().test()
@@ -53,7 +53,7 @@ class AppDataRepositoryTest {
         whenever(mapper.mapFromEntity(entity)) doReturn model
     }
 
-    private fun stubHomePageData(stub: Flowable<HomePageEntity>) {
+    private fun stubHomePageData(stub: Single<HomePageEntity>) {
         whenever(store.getHomePageData()) doReturn stub
     }
 

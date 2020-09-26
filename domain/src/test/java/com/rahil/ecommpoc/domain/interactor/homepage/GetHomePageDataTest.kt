@@ -1,15 +1,16 @@
-package com.rahil.poc.domain.interactor.browse
+package com.rahil.ecommpoc.domain.interactor.homepage
 
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import com.rahil.ecommpoc.domain.executor.PostExecutionThread
 import com.rahil.ecommpoc.domain.executor.ThreadExecutor
 import com.rahil.ecommpoc.domain.interactor.homePage.GetHomePageData
 import com.rahil.ecommpoc.domain.model.homepage.HomePageModel
 import com.rahil.ecommpoc.domain.repository.AppRepository
-import com.rahil.poc.domain.test.HomePageDataFactory
-import io.reactivex.Flowable
+import com.rahil.ecommpoc.domain.test.HomePageDataFactory
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.mockito.MockitoAnnotations
@@ -29,8 +30,14 @@ class GetHomePageDataTest {
     }
 
     @Test
+    fun buildUseCaseObservableCallsRepository() {
+        getHomePageData.buildUseCaseObservable(null)
+        verify(appRepository).getHomePageData()
+    }
+
+    @Test
     fun calling_GetHomePageData_ReturnsComplete() {
-        stubHomePageData(Flowable.just(HomePageDataFactory.makeHomePageData()))
+        stubHomePageData(Single.just(HomePageDataFactory.makeHomePageData()))
         val testObserver = getHomePageData.buildUseCaseObservable().test()
         testObserver.assertComplete()
     }
@@ -38,12 +45,12 @@ class GetHomePageDataTest {
     @Test
     fun calling_GetHomePageData_ReturnsData() {
         val homePageData = HomePageDataFactory.makeHomePageData()
-        stubHomePageData(Flowable.just(homePageData))
+        stubHomePageData(Single.just(homePageData))
         val testObserver = getHomePageData.buildUseCaseObservable().test()
         testObserver.assertValue(homePageData)
     }
 
-    private fun stubHomePageData(observable: Flowable<HomePageModel>) {
+    private fun stubHomePageData(observable: Single<HomePageModel>) {
         whenever(appRepository.getHomePageData()).doReturn(observable)
     }
 }

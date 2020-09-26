@@ -7,6 +7,7 @@ import com.rahil.ecommpoc.data.model.HomePageEntity
 import com.rahil.ecommpoc.data.repository.AppRemote
 import com.rahil.ecommpoc.data.test.factory.HomePageDataFactory
 import io.reactivex.Flowable
+import io.reactivex.Single
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -20,7 +21,7 @@ class AppRemoteDataSourceTest {
 
     @Test
     fun calling_GetHomePageData_ReturnsComplete() {
-        stubRemoteGetHomePageData(Flowable.just(HomePageDataFactory.makeHomePageDataEntity()))
+        stubRemoteGetHomePageData(Single.just(HomePageDataFactory.makeHomePageDataEntity()))
         val testObserver = store.getHomePageData().test()
         testObserver.assertComplete()
     }
@@ -28,12 +29,12 @@ class AppRemoteDataSourceTest {
     @Test
     fun calling_GetHomePageData_ReturnsData() {
         val data = HomePageDataFactory.makeHomePageDataEntity()
-        stubRemoteGetHomePageData(Flowable.just(data))
+        stubRemoteGetHomePageData(Single.just(data))
         val testObserver = store.getHomePageData().test()
         testObserver.assertValue(data)
     }
 
-    private fun stubRemoteGetHomePageData(stub: Flowable<HomePageEntity>) {
+    private fun stubRemoteGetHomePageData(stub: Single<HomePageEntity>) {
         whenever(remote.getHomePageData()) doReturn stub
     }
 }

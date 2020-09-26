@@ -1,16 +1,12 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
-package com.rahil.poc.domain.test
+package com.rahil.ecommpoc.domain.test
 
 import com.rahil.ecommpoc.domain.model.homepage.CategoryModel
 import com.rahil.ecommpoc.domain.model.homepage.HomePageModel
 import com.rahil.ecommpoc.domain.model.homepage.NewServiceModel
-import com.rahil.ecommpoc.domain.test.DataFactory
-import java.util.*
 
 internal object HomePageDataFactory {
-
-    fun randomString() = UUID.randomUUID().toString()
 
     private fun makeCategoryData(): List<CategoryModel> {
         return with(DataFactory) {
