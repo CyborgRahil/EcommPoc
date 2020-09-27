@@ -35,7 +35,7 @@ class HomePagePresenterTest {
 
     @Test
     fun retrieveHomePageDataHideErrorState() {
-        homePagePresenter.retrieveHomePageData()
+        homePagePresenter.start()
 
         verify(mockGetHomePageData).execute(captor.capture(),eq(null))
         captor.firstValue.onSuccess(HomePageDataFactory.makeHomePageData())
@@ -45,11 +45,10 @@ class HomePagePresenterTest {
 
     @Test
     fun retrieveHomePageDataHidesEmptyState() {
-        homePagePresenter.retrieveHomePageData()
-
+        homePagePresenter.start()
+        verify(mockHomePageView).hideEmptyState()
         verify(mockGetHomePageData).execute(captor.capture(), eq(null))
         captor.firstValue.onSuccess(HomePageDataFactory.makeHomePageData())
-        verify(mockHomePageView).hideEmptyState()
     }
 
     @Test
@@ -60,6 +59,7 @@ class HomePagePresenterTest {
         verify(mockGetHomePageData).execute(captor.capture(), eq(null))
         captor.firstValue.onSuccess(homePageData)
         verify(mockHomePageView).showHomeData(homePageData)
+        verify(mockHomePageView).hideProgress()
     }
     
     @Test
@@ -68,26 +68,17 @@ class HomePagePresenterTest {
 
         verify(mockGetHomePageData).execute(captor.capture(), eq(null))
         captor.firstValue.onError(RuntimeException())
+        verify(mockHomePageView).hideProgress()
         verify(mockHomePageView).showErrorState()
     }
 
     @Test
     fun retrieveHomePageDataWhenErrorThrown() {
-        homePagePresenter.retrieveHomePageData()
+        homePagePresenter.start()
 
         verify(mockGetHomePageData).execute(captor.capture(), eq(null))
         captor.firstValue.onError(RuntimeException())
         verify(mockHomePageView).hideProgress()
-        verify(mockHomePageView).hideEmptyState()
         verify(mockHomePageView).showErrorState()
-    }
-
-    @Test
-    fun retrieveHomePageDataHidesEmptyStateWhenErrorThrown() {
-        homePagePresenter.retrieveHomePageData()
-
-        verify(mockGetHomePageData).execute(captor.capture(), eq(null))
-        captor.firstValue.onError(RuntimeException())
-        verify(mockHomePageView).hideEmptyState()
     }
 }

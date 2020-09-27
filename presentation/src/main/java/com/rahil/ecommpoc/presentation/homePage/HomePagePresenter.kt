@@ -15,6 +15,8 @@ class HomePagePresenter @Inject constructor(private val homePageView: HomePageCo
 
     override fun start() {
         homePageView.showProgress()
+        homePageView.hideEmptyState()
+        homePageView.hideErrorState()
         retrieveHomePageData()
     }
 
@@ -28,8 +30,6 @@ class HomePagePresenter @Inject constructor(private val homePageView: HomePageCo
 
     fun handleGetHomePageDataSuccess(homePageModel: HomePageModel) {
         homePageView.hideProgress()
-        homePageView.hideErrorState()
-        homePageView.hideEmptyState()
         homePageView.showHomeData(homePageModel)
     }
 
@@ -37,7 +37,6 @@ class HomePagePresenter @Inject constructor(private val homePageView: HomePageCo
 
         override fun onError(exception: Throwable) {
             homePageView.hideProgress()
-            homePageView.hideEmptyState()
             homePageView.showErrorState()
         }
 

@@ -16,7 +16,7 @@ android {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
         multiDexEnabled = true
-        testInstrumentationRunner "com.rahil.newspoc.test.TestRunner"
+        testInstrumentationRunner "com.rahil.ecommpoc.test.TestRunner"
     }
 
     dexOptions {
@@ -51,6 +51,7 @@ dependencies {
     implementation project(':data')
     implementation project(':remote')
     implementation project(':presentation')
+    implementation project(':domain')
 
     implementation mobileUiDependencies.javaxAnnotation
 
@@ -67,6 +68,12 @@ dependencies {
     implementation mobileUiDependencies.dagger
     implementation mobileUiDependencies.daggerSupport
     implementation mobileUiDependencies.constraintLayout
+    implementation mobileUiDependencies.navigationFragment
+    implementation mobileUiDependencies.navigationUi
+    implementation mobileUiDependencies.navigationFragmentKtx
+    implementation mobileUiDependencies.navigationUiKtx
+    implementation mobileUiDependencies.playServiceMap
+    implementation mobileUiDependencies.mapUtils
 
     testImplementation mobileUiTestDependencies.kotlinJUnit
 
@@ -80,7 +87,9 @@ dependencies {
     androidTestImplementation mobileUiTestDependencies.espressoCore
     androidTestImplementation mobileUiTestDependencies.espressoContrib
     androidTestImplementation mobileUiTestDependencies.supportRunner
+    androidTestImplementation mobileUiTestDependencies.navigationTesting
     androidTestImplementation mobileUiTestDependencies.supportRules
+    androidTestImplementation mobileUiTestDependencies.espressoIdlingRes
     kaptTest mobileUiDependencies.daggerCompiler
     kaptAndroidTest mobileUiDependencies.daggerCompiler
 }
